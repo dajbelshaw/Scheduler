@@ -39,5 +39,4 @@ MAILGUN_FROM_EMAIL="Scheduler <no-reply@your-domain>"
 BASE_PUBLIC_URL=http://localhost:5173
 ```
 
-See the PRD for detailed product behaviour and constraints.
 
