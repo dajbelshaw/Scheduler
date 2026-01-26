@@ -246,9 +246,6 @@ pagesRouter.post("/:slug/requests", requestLimiter, async (req, res) => {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
-  // eslint-disable-next-line no-console
-  console.log("[Pages] About to call sendAppointmentRequestEmail");
-
   try {
     await sendAppointmentRequestEmail({
       ownerName: page.ownerName,
@@ -262,12 +259,8 @@ pagesRouter.post("/:slug/requests", requestLimiter, async (req, res) => {
       timezone
     });
 
-    // eslint-disable-next-line no-console
-    console.log("[Pages] Email sent successfully");
     return res.status(202).json({ status: "sent" });
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.error("[Pages] Email sending failed:", err.message);
+  } catch (_err) {
     return res.status(502).json({
       error:
         "We could not send the email right now. Please try again later or email the calendar owner directly."

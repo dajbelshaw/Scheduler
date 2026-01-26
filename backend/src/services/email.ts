@@ -28,18 +28,7 @@ if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN || !MAILGUN_FROM_EMAIL) {
 export async function sendAppointmentRequestEmail(
   payload: AppointmentEmailPayload
 ): Promise<void> {
-  // eslint-disable-next-line no-console
-  console.log("[Email] sendAppointmentRequestEmail called");
-  // eslint-disable-next-line no-console
-  console.log("[Email] MAILGUN_API_KEY set:", !!MAILGUN_API_KEY);
-  // eslint-disable-next-line no-console
-  console.log("[Email] MAILGUN_DOMAIN:", MAILGUN_DOMAIN);
-  // eslint-disable-next-line no-console
-  console.log("[Email] MAILGUN_API_BASE:", MAILGUN_API_BASE);
-
   if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN || !MAILGUN_FROM_EMAIL) {
-    // eslint-disable-next-line no-console
-    console.error("[Email] Mailgun not configured!");
     throw new Error("Mailgun not configured");
   }
 
@@ -87,27 +76,19 @@ export async function sendAppointmentRequestEmail(
   form.append("text", text);
 
   const url = `${MAILGUN_API_BASE}/v3/${MAILGUN_DOMAIN}/messages`;
-  // eslint-disable-next-line no-console
-  console.log("[Email] Sending to URL:", url);
-  // eslint-disable-next-line no-console
-  console.log("[Email] To:", ownerEmail);
 
   try {
-    const response = await axios.post(url, form, {
+    await axios.post(url, form, {
       headers: {
         Authorization: `Basic ${auth}`,
         "Content-Type": "application/x-www-form-urlencoded"
       },
       timeout: 10000
     });
-    // eslint-disable-next-line no-console
-    console.log("[Email] Success:", response.data);
   } catch (err: any) {
     const message = err.response?.data?.message || err.message;
     // eslint-disable-next-line no-console
-    console.error(`[Email] Mailgun API error: ${message}`);
-    // eslint-disable-next-line no-console
-    console.error(`[Email] Full error:`, err.response?.data || err.message);
+    console.error(`Mailgun API error: ${message}`);
     throw new Error(`Email send failed: ${message}`);
   }
 }
