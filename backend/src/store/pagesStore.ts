@@ -7,6 +7,8 @@ export interface SchedulingPage {
   defaultDurationMinutes: number;
   bufferMinutes: number;
   dateRangeDays: number;
+  minNoticeHours: number;
+  includeWeekends: boolean;
   createdAt: number;
   expiresAt: number;
 }

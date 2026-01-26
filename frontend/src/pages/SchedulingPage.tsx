@@ -10,6 +10,8 @@ interface PageData {
   defaultDurationMinutes: number;
   bufferMinutes: number;
   dateRangeDays: number;
+  minNoticeHours: number;
+  includeWeekends: boolean;
   expiresAt: number;
   busySlots: { start: string; end: string }[];
 }
@@ -88,18 +90,35 @@ export function SchedulingPage() {
     const out: { date: Date; slots: Slot[] }[] = [];
     const duration = page.defaultDurationMinutes;
     const now = new Date();
+    const minNoticeMs = (page.minNoticeHours ?? 8) * 60 * 60 * 1000;
+    const earliestStart = new Date(now.getTime() + minNoticeMs);
+    const includeWeekends = page.includeWeekends ?? false;
     const days = Math.min(7, page.dateRangeDays);
 
-    for (let d = 0; d < days; d++) {
+    let daysAdded = 0;
+    let dayOffset = 0;
+
+    // Loop until we have enough days (up to 14 days out to find 7 weekdays)
+    while (daysAdded < days && dayOffset < 14) {
       const day = new Date(
         now.getFullYear(),
         now.getMonth(),
-        now.getDate() + d,
+        now.getDate() + dayOffset,
         0,
         0,
         0,
         0
       );
+
+      const dayOfWeek = day.getDay();
+      const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+      // Skip weekends if not included
+      if (isWeekend && !includeWeekends) {
+        dayOffset++;
+        continue;
+      }
+
       const slots: Slot[] = [];
       for (let h = 9; h < 17; h++) {
         const start = new Date(
@@ -112,11 +131,19 @@ export function SchedulingPage() {
           0
         );
         const end = new Date(start.getTime() + duration * 60000);
+
+        // Skip slots that don't meet minimum notice requirement
+        if (start < earliestStart) {
+          continue;
+        }
+
         if (!isBusy(start, end)) {
           slots.push({ start, end });
         }
       }
       out.push({ date: day, slots });
+      daysAdded++;
+      dayOffset++;
     }
     return out;
   };

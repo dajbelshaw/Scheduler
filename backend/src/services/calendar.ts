@@ -105,10 +105,17 @@ export async function fetchAndParseCalendar(
     // Handle recurring events
     if (event.rrule) {
       try {
-        const rrule = parseRRule(event.rrule, eventStart);
-        
-        // Expand recurring events within our date range
-        const occurrences = rrule.between(startDate, endDate, true);
+        // node-ical may return an already-parsed RRule object with a between() method
+        // or it may return a string/object that needs parsing
+        let occurrences: Date[];
+        if (typeof event.rrule.between === "function") {
+          // Already parsed by node-ical, use directly
+          occurrences = event.rrule.between(startDate, endDate, true);
+        } else {
+          // Need to parse manually
+          const rrule = parseRRule(event.rrule, eventStart);
+          occurrences = rrule.between(startDate, endDate, true);
+        }
 
         // Handle exclusions (EXDATE)
         const exdates = new Set<string>();
@@ -138,17 +145,11 @@ export async function fetchAndParseCalendar(
           }
         }
       } catch (err: any) {
-        // Log the error for debugging
+        // Log the error for debugging but don't add the event
+        // Recurring events often have start dates in the past, so adding
+        // the original event would pollute results with incorrect data
         // eslint-disable-next-line no-console
-        console.error("RRULE parsing error:", err.message, "rrule:", event.rrule);
-        
-        // If RRULE parsing fails, fall back to single event if it's in range
-        if (eventStart <= endDate && eventEnd >= startDate) {
-          busySlots.push({
-            start: eventStart.toISOString(),
-            end: eventEnd.toISOString()
-          });
-        }
+        console.error("RRULE parsing error:", err.message);
       }
     } else {
       // Single event (non-recurring)

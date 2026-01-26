@@ -27,6 +27,8 @@ export function HomePage() {
   const [duration, setDuration] = useState(30);
   const [buffer, setBuffer] = useState(0);
   const [dateRange, setDateRange] = useState(60);
+  const [minNotice, setMinNotice] = useState(8);
+  const [includeWeekends, setIncludeWeekends] = useState(false);
 
   const [previewEventCount, setPreviewEventCount] = useState<number | null>(
     null
@@ -75,7 +77,9 @@ export function HomePage() {
         bio,
         defaultDurationMinutes: duration,
         bufferMinutes: buffer,
-        dateRangeDays: dateRange
+        dateRangeDays: dateRange,
+        minNoticeHours: minNotice,
+        includeWeekends
       });
       setCreatedPage(resp.data);
       setStep(3);
@@ -263,7 +267,7 @@ export function HomePage() {
               </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <label htmlFor="duration" className="label">
                   Appointment duration
@@ -280,6 +284,27 @@ export function HomePage() {
                   <option value={60}>60 minutes</option>
                 </select>
               </div>
+              <div>
+                <label htmlFor="min-notice" className="label">
+                  Minimum notice
+                </label>
+                <select
+                  id="min-notice"
+                  value={minNotice}
+                  onChange={(e) => setMinNotice(Number(e.target.value))}
+                  className="input mt-2"
+                >
+                  <option value={0}>No minimum</option>
+                  <option value={2}>2 hours</option>
+                  <option value={4}>4 hours</option>
+                  <option value={8}>8 hours</option>
+                  <option value={24}>24 hours</option>
+                  <option value={48}>48 hours</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <label htmlFor="buffer" className="label">
                   Buffer between slots
@@ -313,6 +338,19 @@ export function HomePage() {
                   1–180 days
                 </p>
               </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <input
+                id="include-weekends"
+                type="checkbox"
+                checked={includeWeekends}
+                onChange={(e) => setIncludeWeekends(e.target.checked)}
+                className="h-4 w-4 rounded border-border-muted bg-surface-elevated text-accent-text focus:ring-accent-text"
+              />
+              <label htmlFor="include-weekends" className="label">
+                Include weekends
+              </label>
             </div>
 
             {error && (

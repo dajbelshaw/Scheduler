@@ -16,6 +16,8 @@ interface CreatePageBody {
   defaultDurationMinutes?: number;
   bufferMinutes?: number;
   dateRangeDays?: number;
+  minNoticeHours?: number;
+  includeWeekends?: boolean;
 }
 
 // Rate limiting: protect page creation and request endpoints
@@ -146,6 +148,8 @@ pagesRouter.post("/", createPageLimiter, async (req, res) => {
       defaultDurationMinutes: body.defaultDurationMinutes ?? 30,
       bufferMinutes: body.bufferMinutes ?? 0,
       dateRangeDays,
+      minNoticeHours: body.minNoticeHours ?? 8,
+      includeWeekends: body.includeWeekends ?? false,
       createdAt: now,
       expiresAt
     });
@@ -196,6 +200,8 @@ pagesRouter.get("/:slug", async (req, res) => {
       defaultDurationMinutes: page.defaultDurationMinutes,
       bufferMinutes: page.bufferMinutes,
       dateRangeDays: page.dateRangeDays,
+      minNoticeHours: page.minNoticeHours,
+      includeWeekends: page.includeWeekends,
       expiresAt: page.expiresAt,
       busySlots
     });
