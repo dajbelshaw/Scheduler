@@ -354,9 +354,9 @@ pagesRouter.get("/:slug/requests/:token/confirm", confirmLimiter, async (req, re
     return res.status(200).contentType("text/html").send(`<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Link Expired - Scheduler</title>
-<style>body{font-family:system-ui,sans-serif;background:#020617;color:#f8fafc;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem}
-.card{max-width:28rem;text-align:center;background:#0f172a;border:1px solid #1e293b;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px rgba(0,0,0,.3)}
-h1{font-size:1.25rem;margin:0 0 .75rem}p{color:#94a3b8;font-size:.875rem;margin:0}</style></head>
+<style>body{font-family:system-ui,sans-serif;background:#5E81AC;color:#ECEFF4;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem}
+.card{max-width:28rem;text-align:center;background:#3B4252;border:1px solid #4C566A;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px rgba(0,0,0,.3)}
+h1{font-size:1.25rem;margin:0 0 .75rem}p{color:#D8DEE9;font-size:.875rem;margin:0}</style></head>
 <body><div class="card"><h1>This link has expired or has already been used.</h1><p>Confirmation links are valid for 1 hour and can only be used once.</p></div></body></html>`);
   }
 
@@ -367,9 +367,9 @@ h1{font-size:1.25rem;margin:0 0 .75rem}p{color:#94a3b8;font-size:.875rem;margin:
     return res.status(200).contentType("text/html").send(`<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page Expired - Scheduler</title>
-<style>body{font-family:system-ui,sans-serif;background:#020617;color:#f8fafc;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem}
-.card{max-width:28rem;text-align:center;background:#0f172a;border:1px solid #1e293b;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px rgba(0,0,0,.3)}
-h1{font-size:1.25rem;margin:0 0 .75rem}p{color:#94a3b8;font-size:.875rem;margin:0}</style></head>
+<style>body{font-family:system-ui,sans-serif;background:#5E81AC;color:#ECEFF4;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem}
+.card{max-width:28rem;text-align:center;background:#3B4252;border:1px solid #4C566A;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px rgba(0,0,0,.3)}
+h1{font-size:1.25rem;margin:0 0 .75rem}p{color:#D8DEE9;font-size:.875rem;margin:0}</style></head>
 <body><div class="card"><h1>The scheduling page has expired.</h1><p>The calendar owner&rsquo;s scheduling link is no longer active.</p></div></body></html>`);
   }
 
@@ -393,17 +393,17 @@ h1{font-size:1.25rem;margin:0 0 .75rem}p{color:#94a3b8;font-size:.875rem;margin:
     return res.status(200).contentType("text/html").send(`<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Request Confirmed - Scheduler</title>
-<style>body{font-family:system-ui,sans-serif;background:#020617;color:#f8fafc;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem}
-.card{max-width:28rem;text-align:center;background:#0f172a;border:1px solid #1e293b;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px rgba(0,0,0,.3)}
-h1{font-size:1.25rem;margin:0 0 .75rem;color:#7dd3fc}p{color:#94a3b8;font-size:.875rem;margin:0}</style></head>
+<style>body{font-family:system-ui,sans-serif;background:#5E81AC;color:#ECEFF4;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem}
+.card{max-width:28rem;text-align:center;background:#3B4252;border:1px solid #4C566A;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px rgba(0,0,0,.3)}
+h1{font-size:1.25rem;margin:0 0 .75rem;color:#A3BE8C}p{color:#D8DEE9;font-size:.875rem;margin:0}</style></head>
 <body><div class="card"><h1>Your appointment request has been sent!</h1><p>${ownerFirst} will receive your request and respond to you by email.</p></div></body></html>`);
   } catch (_err) {
     return res.status(502).contentType("text/html").send(`<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Error - Scheduler</title>
-<style>body{font-family:system-ui,sans-serif;background:#020617;color:#f8fafc;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem}
-.card{max-width:28rem;text-align:center;background:#0f172a;border:1px solid #1e293b;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px rgba(0,0,0,.3)}
-h1{font-size:1.25rem;margin:0 0 .75rem;color:#fecdd3}p{color:#94a3b8;font-size:.875rem;margin:0}</style></head>
+<style>body{font-family:system-ui,sans-serif;background:#5E81AC;color:#ECEFF4;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem}
+.card{max-width:28rem;text-align:center;background:#3B4252;border:1px solid #4C566A;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px rgba(0,0,0,.3)}
+h1{font-size:1.25rem;margin:0 0 .75rem;color:#DBA8AD}p{color:#D8DEE9;font-size:.875rem;margin:0}</style></head>
 <body><div class="card"><h1>Something went wrong.</h1><p>We could not send the appointment request right now. Please try again later.</p></div></body></html>`);
   }
 });

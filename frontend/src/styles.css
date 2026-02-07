@@ -8,40 +8,41 @@
 
 @layer base {
   :root {
-    /* Surface colors (RGB values for alpha support) */
-    --color-surface-base: 2 6 23; /* slate-950 */
-    --color-surface-elevated: 15 23 42; /* slate-900 */
-    --color-surface-overlay: 30 41 59; /* slate-800 */
+    /* Surface colors — Nord Polar Night (RGB for alpha support) */
+    --color-surface-base: 46 52 64;        /* #2E3440 - deepest (inputs) */
+    --color-surface-elevated: 59 66 82;    /* #3B4252 - cards */
+    --color-surface-overlay: 67 76 94;     /* #434C5E - inner cards */
 
-    /* Border colors */
-    --color-border: 51 65 85; /* slate-700 */
-    --color-border-muted: 30 41 59; /* slate-800 */
+    /* Border colors — Nord Polar Night */
+    --color-border: 76 86 106;             /* #4C566A */
+    --color-border-muted: 59 66 82;        /* #3B4252 */
 
-    /* Text colors */
-    --color-content: 248 250 252; /* slate-50 */
-    --color-content-muted: 148 163 184; /* slate-400 */
-    --color-content-subtle: 100 116 139; /* slate-500 */
-    --color-content-inverse: 2 6 23; /* slate-950 */
+    /* Text colors — Nord Snow Storm + Frost */
+    --color-content: 236 239 244;          /* #ECEFF4 */
+    --color-content-muted: 216 222 233;    /* #D8DEE9 */
+    --color-content-subtle: 143 188 187;   /* #8FBCBB - Frost */
+    --color-content-inverse: 46 52 64;     /* #2E3440 */
 
-    /* Accent colors (sky) */
-    --color-accent: 14 165 233; /* sky-500 */
-    --color-accent-hover: 56 189 248; /* sky-400 */
-    --color-accent-muted: 12 74 110; /* sky-900 */
-    --color-accent-text: 125 211 252; /* sky-300 */
+    /* Accent colors — Nord Aurora yellow (gold) */
+    --color-accent: 235 203 139;           /* #EBCB8B */
+    --color-accent-hover: 216 186 116;     /* #D8BA74 - deeper gold */
+    --color-accent-muted: 76 72 56;        /* dark gold-tinted bg */
+    --color-accent-text: 235 203 139;      /* #EBCB8B */
 
-    /* Success colors (emerald) */
-    --color-success: 16 185 129; /* emerald-500 */
-    --color-success-muted: 6 78 59; /* emerald-900 */
-    --color-success-text: 167 243 208; /* emerald-200 */
+    /* Success colors — Nord Aurora green */
+    --color-success: 163 190 140;          /* #A3BE8C */
+    --color-success-muted: 52 66 52;       /* dark green bg */
+    --color-success-text: 163 190 140;     /* #A3BE8C */
 
-    /* Error colors (rose) */
-    --color-error: 244 63 94; /* rose-500 */
-    --color-error-muted: 76 5 25; /* rose-950 */
-    --color-error-text: 254 205 211; /* rose-200 */
+    /* Error colors — Nord Aurora red */
+    --color-error: 191 97 106;             /* #BF616A */
+    --color-error-muted: 74 51 56;         /* dark red bg */
+    --color-error-text: 219 168 173;       /* #DBA8AD - light pink for AA */
   }
 
   body {
-    @apply bg-surface-base text-content;
+    background-color: #5E81AC; /* Nord Frost blue — Dynamic Skillset brand */
+    @apply text-content;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
       "Segoe UI", sans-serif;
   }
@@ -63,11 +64,11 @@
 
   /* Card containers */
   .card {
-    @apply rounded-card border border-border-muted bg-surface-elevated/40 p-6 shadow-card;
+    @apply rounded-card border border-border-muted bg-surface-elevated p-6 shadow-card;
   }
 
   .card-inner {
-    @apply rounded-xl border border-border bg-surface-elevated/60 p-4;
+    @apply rounded-xl border border-border bg-surface-overlay p-4;
   }
 
   /* Form inputs */
