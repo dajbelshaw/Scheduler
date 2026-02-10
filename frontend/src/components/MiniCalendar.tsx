@@ -16,6 +16,14 @@ function toDateStr(d: Date): string {
   return `${y}-${m}-${day}`;
 }
 
+function toReadableDate(d: Date): string {
+  return d.toLocaleDateString(undefined, {
+    weekday: "long",
+    month: "long",
+    day: "numeric"
+  });
+}
+
 export function MiniCalendar({
   displayMonth,
   availableDates,
@@ -89,7 +97,7 @@ export function MiniCalendar({
         {DAY_LABELS.map((d) => (
           <div
             key={d}
-            className="flex h-8 items-center justify-center text-xs font-medium uppercase tracking-wider text-content-muted"
+            className="flex h-9 items-center justify-center text-xs font-medium uppercase tracking-wider text-content-muted"
           >
             {d.charAt(0)}
           </div>
@@ -115,7 +123,7 @@ export function MiniCalendar({
                   type="button"
                   onClick={() => onSelectDate(dateStr)}
                   className="mini-cal-selected"
-                  aria-label={`${dateStr}, selected`}
+                  aria-label={`${toReadableDate(date)}, selected`}
                 >
                   {date.getDate()}
                 </button>
@@ -131,7 +139,7 @@ export function MiniCalendar({
                   type="button"
                   onClick={() => onSelectDate(dateStr)}
                   className="mini-cal-available"
-                  aria-label={`${dateStr}, has available slots`}
+                  aria-label={`${toReadableDate(date)}, has available slots`}
                 >
                   {date.getDate()}
                 </button>

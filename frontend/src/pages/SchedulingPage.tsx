@@ -337,7 +337,7 @@ export function SchedulingPage() {
     >
       {/* Loading skeleton */}
       {isLoading && (
-        <div aria-busy="true" aria-label="Loading scheduling page">
+        <div role="status" aria-busy="true" aria-label="Loading scheduling page">
           <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
             <div className="flex-1">
               <div className="skeleton h-8 w-48" />
@@ -351,7 +351,7 @@ export function SchedulingPage() {
                 <div className="skeleton mb-3 h-6 w-32" />
                 <div className="grid grid-cols-7 gap-1">
                   {[...Array(35)].map((_, i) => (
-                    <div key={i} className="skeleton h-8 w-8 rounded-full" />
+                    <div key={i} className="skeleton h-9 w-full rounded-full" />
                   ))}
                 </div>
               </div>

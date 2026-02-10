@@ -286,7 +286,7 @@ export function HomePage() {
                     <button
                       type="button"
                       onClick={() => removeCalendarUrl(index)}
-                      className="shrink-0 text-xs text-content-muted hover:text-error"
+                      className="shrink-0 min-h-touch min-w-touch text-xs text-content-muted hover:text-error"
                       aria-label={`Remove calendar URL ${index + 1}`}
                     >
                       Remove
@@ -298,7 +298,7 @@ export function HomePage() {
                 <button
                   type="button"
                   onClick={addCalendarUrl}
-                  className="mt-2 text-xs text-accent-text hover:text-accent-hover"
+                  className="mt-2 min-h-touch text-xs text-accent-text hover:text-accent-hover"
                 >
                   + Add another calendar (up to 5)
                 </button>
@@ -404,7 +404,7 @@ export function HomePage() {
                   id="duration"
                   value={duration}
                   onChange={(e) => setDuration(Number(e.target.value))}
-                  className="input mt-2"
+                  className="select mt-2"
                 >
                   <option value={15}>15 minutes</option>
                   <option value={30}>30 minutes</option>
@@ -420,7 +420,7 @@ export function HomePage() {
                   id="min-notice"
                   value={minNotice}
                   onChange={(e) => setMinNotice(Number(e.target.value))}
-                  className="input mt-2"
+                  className="select mt-2"
                 >
                   <option value={0}>No minimum</option>
                   <option value={2}>2 hours</option>
@@ -441,7 +441,7 @@ export function HomePage() {
                   id="buffer"
                   value={buffer}
                   onChange={(e) => setBuffer(Number(e.target.value))}
-                  className="input mt-2"
+                  className="select mt-2"
                 >
                   <option value={0}>No buffer</option>
                   <option value={15}>15 minutes</option>
@@ -477,7 +477,7 @@ export function HomePage() {
                   id="expiry"
                   value={expiryHours}
                   onChange={(e) => setExpiryHours(Number(e.target.value))}
-                  className="input mt-2"
+                  className="select mt-2"
                 >
                   {EXPIRY_OPTIONS.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -493,7 +493,7 @@ export function HomePage() {
                     type="checkbox"
                     checked={includeWeekends}
                     onChange={(e) => setIncludeWeekends(e.target.checked)}
-                    className="h-4 w-4 rounded border-border-muted bg-surface-elevated text-accent-text focus:ring-accent-text"
+                    className="checkbox"
                   />
                   <label htmlFor="include-weekends" className="label">
                     Include weekends

@@ -8,6 +8,8 @@
 
 @layer base {
   :root {
+    color-scheme: dark;
+
     /* Surface colors — Nord Polar Night (RGB for alpha support) */
     --color-surface-base: 46 52 64;        /* #2E3440 - deepest (inputs) */
     --color-surface-elevated: 59 66 82;    /* #3B4252 - cards */
@@ -82,6 +84,47 @@
     @apply focus:border-accent-hover focus:outline-none focus:ring-2 focus:ring-accent/40;
   }
 
+  /* Select — custom arrow for consistent dark theme across browsers */
+  .select {
+    @apply w-full rounded-input border border-border bg-surface-elevated px-3 py-2.5 pr-8 text-sm text-content transition-colors;
+    @apply focus:border-accent-hover focus:outline-none focus:ring-2 focus:ring-accent/40;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23D8DEE9' d='M6 8.825a.5.5 0 0 1-.354-.146L2.354 5.387a.5.5 0 1 1 .707-.707L6 7.618l2.939-2.938a.5.5 0 1 1 .707.707L6.354 8.679A.5.5 0 0 1 6 8.825z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.625rem center;
+    background-size: 0.75rem;
+  }
+
+  /* Checkbox — cross-browser dark theme (fixes Firefox rendering) */
+  .checkbox {
+    @apply h-5 w-5 shrink-0 cursor-pointer rounded border border-border bg-surface-base transition-colors;
+    appearance: none;
+    display: grid;
+    place-content: center;
+  }
+
+  .checkbox::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+    transition: transform 0.1s ease-in-out;
+    box-shadow: inset 1em 1em rgb(var(--color-content-inverse));
+  }
+
+  .checkbox:checked {
+    @apply border-accent bg-accent;
+  }
+
+  .checkbox:checked::before {
+    transform: scale(1);
+  }
+
+  .checkbox:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+
   /* Labels */
   .label {
     @apply block text-sm font-medium text-content/90;
@@ -111,7 +154,7 @@
   }
 
   .btn-light {
-    @apply btn bg-content text-content-inverse hover:bg-white;
+    @apply btn bg-content text-content-inverse hover:bg-[#E5E9F0];
   }
 
   /* Time slot pills */
@@ -171,13 +214,13 @@
   }
 
   .week-nav-btn {
-    @apply inline-flex h-8 w-8 items-center justify-center rounded-input text-content-muted transition-colors hover:bg-surface-overlay hover:text-content;
+    @apply inline-flex h-touch w-touch items-center justify-center rounded-input text-content-muted transition-colors hover:bg-surface-overlay hover:text-content;
     @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
   }
 
-  /* Mini calendar cells */
+  /* Mini calendar cells — fill grid column, min 44px tap target on interactive cells */
   .mini-cal-cell {
-    @apply flex h-8 w-8 items-center justify-center rounded-full text-xs;
+    @apply flex h-9 w-full items-center justify-center rounded-full text-xs;
   }
 
   .mini-cal-available {

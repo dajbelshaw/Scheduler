@@ -160,7 +160,7 @@ export function WeekView({
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setMobileDayIndex(i)}
-                className={`flex shrink-0 flex-col items-center rounded-input px-3 py-1.5 text-xs transition-colors ${
+                className={`flex shrink-0 flex-col items-center rounded-input px-3 py-2 min-h-touch text-xs transition-colors ${
                   isActive
                     ? "bg-accent text-content-inverse"
                     : day.slots.length > 0
