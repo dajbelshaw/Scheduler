@@ -39,4 +39,12 @@ export function initStores(): void {
   purgeTimers.push(
     setInterval(() => { pendingRequestsStore.purgeExpired(); }, 5 * 60 * 1000)
   );
+
+  // Purge expired auth sessions daily
+  if (pool) {
+    const { purgeExpiredSessions } = require("../auth");
+    purgeTimers.push(
+      setInterval(() => { purgeExpiredSessions(pool); }, 24 * 60 * 60 * 1000)
+    );
+  }
 }

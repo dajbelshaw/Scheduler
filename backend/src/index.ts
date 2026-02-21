@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import cookieParser from "cookie-parser";
 
 import { pagesRouter } from "./routes/pages";
-import { initDatabase } from "./db/client";
+import { createAuthRouter } from "./auth";
+import { initDatabase, getPool } from "./db/client";
 import { runMigrations } from "./db/migrate";
 import { initStores } from "./store";
 
@@ -25,21 +27,19 @@ const allowedOrigin =
 
 app.use(
   cors({
-    origin: allowedOrigin
+    origin: allowedOrigin,
+    credentials: true
   })
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
 app.use("/api/pages", pagesRouter);
-
-app.use((_req, res) => {
-  res.status(404).json({ error: "Not found" });
-});
 
 async function start() {
   try {
@@ -53,6 +53,17 @@ async function start() {
     // eslint-disable-next-line no-console
     console.log("Falling back to ephemeral in-memory mode.");
   }
+
+  // Auth routes — only available when a database is connected
+  const pool = getPool();
+  if (pool) {
+    app.use("/auth", createAuthRouter(pool));
+  }
+
+  // 404 handler must come after all route registrations
+  app.use((_req, res) => {
+    res.status(404).json({ error: "Not found" });
+  });
 
   initStores();
 
