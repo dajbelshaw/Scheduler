@@ -1,0 +1,52 @@
+databases:
+  - name: calanywhere-db
+    plan: free
+    databaseName: calanywhere
+    user: calanywhere
+
+services:
+  - type: web
+    name: calanywhere-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm ci && npm run build
+    startCommand: node dist/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "4000"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: calanywhere-db
+          property: connectionString
+      - key: MAILGUN_API_KEY
+        sync: false
+      - key: MAILGUN_DOMAIN
+        sync: false
+      - key: MAILGUN_FROM_EMAIL
+        sync: false
+      - key: MAILGUN_API_BASE
+        value: https://api.eu.mailgun.net
+      - key: BASE_PUBLIC_URL
+        sync: false
+      - key: ALLOWED_ORIGIN
+        value: "*"
+
+  - type: web
+    name: calanywhere-frontend
+    runtime: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://calanywhere-backend.onrender.com/api/*
