@@ -8,7 +8,7 @@ services:
   - type: web
     name: calanywhere-backend
     runtime: node
-    plan: free
+    plan: starter
     rootDir: backend
     buildCommand: npm ci && npm run build
     startCommand: node dist/index.js
@@ -38,7 +38,7 @@ services:
   - type: web
     name: calanywhere-frontend
     runtime: static
-    plan: free
+    plan: starter
     rootDir: frontend
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
