@@ -1,59 +1,31 @@
-![CalAnywhere logo](https://github.com/dynamicskillset/CalAnywhere/blob/main/calanywhere.jpg?raw=true)
+![CalAnywhere logo](https://github.com/dajbelshaw/CalAnywhere/blob/main/calanywhere.jpg?raw=true)
 
-## CalAnywhere Cloud
+## CalAnywhere
 
-The managed hosting platform for [CalAnywhere](https://github.com/dajbelshaw/Scheduler), the privacy-first scheduling tool for any calendar.
+A privacy-first scheduling tool that works with any calendar. No OAuth, no email collection, no passwords. Just share your iCal URL and let people book time with you.
+
+### How it works
+
+1. **Sign up** with an Emoji ID (a memorable 3-emoji handle like 🐶🍕🚀) and your calendar's iCal URL
+2. **Create a scheduling page** with your available times
+3. **Share the link** — visitors see your free/busy times and can request a slot
+4. Your iCal URL is your credential. No password to remember, no email to verify.
 
 ### Architecture
 
-This repository extends the open-source CalAnywhere core with cloud features:
-
 ```
-backend/          # AGPL-3.0 core (synced from upstream)
-frontend/         # AGPL-3.0 core (synced from upstream)
-cloud/            # BSL-1.1 cloud additions
-  auth/           # Authentication (magic links, sessions)
-  dashboard/      # User dashboard & saved calendars
-  billing/        # Stripe integration & subscription tiers
-  oauth/          # Google Calendar OAuth integration
+backend/          # Express + TypeScript API
+  src/auth/       # Emoji ID authentication (email-free)
+  src/routes/     # Scheduling pages API
+  src/db/         # PostgreSQL with in-memory fallback
+frontend/         # React + Vite + TypeScript UI
+  src/pages/      # Signup, signin, recover, scheduling
+  src/components/ # EmojiPicker, NavBar, shared UI
 ```
 
-### Relationship to the open-source core
+### Self-hosting
 
-The core scheduling engine lives at [dajbelshaw/Scheduler](https://github.com/dajbelshaw/Scheduler) under AGPL-3.0. Anyone can self-host it for free.
-
-This repository is a fork that adds:
-
-- **User accounts** — magic link auth, persistent sessions
-- **Saved calendars** — encrypted storage of calendar URLs
-- **Persistent scheduling pages** — pages that don't expire
-- **Google Calendar integration** — OAuth-based calendar access
-- **Managed hosting** — the service at calanywhere.com
-- **Billing** — Stripe subscriptions for premium features
-
-### Deploy to Render (free tier)
-
-You can deploy a fully working instance in a few minutes using [Render](https://render.com):
-
-1. Fork this repo (or use it directly)
-2. Go to **Render** → **New** → **Blueprint**
-3. Select the repository — Render reads the included `render.yaml` and creates three services: **PostgreSQL**, **backend** (Node), and **frontend** (static site)
-4. Fill in the environment variables when prompted:
-
-   | Variable | Value |
-   |---|---|
-   | `MAILGUN_API_KEY` | Your Mailgun key (or `fake-key-123` to skip email) |
-   | `MAILGUN_DOMAIN` | Your Mailgun domain (or `example.com`) |
-   | `MAILGUN_FROM_EMAIL` | e.g. `CalAnywhere <no-reply@example.com>` |
-   | `BASE_PUBLIC_URL` | Your frontend URL, e.g. `https://calanywhere-frontend.onrender.com` |
-
-5. Click **Apply** — Render provisions the database, builds both services, and gives you a live URL
-
-> **Note:** If Render names your backend something other than `calanywhere-backend`, update the `/api/*` rewrite URL in the frontend service's **Redirects/Rewrites** settings to match.
-
-> **Note:** Free tier services sleep after 15 minutes of inactivity. The first request after idle takes ~30 seconds to wake up.
-
-### Docker Compose (local)
+#### Docker Compose
 
 ```bash
 cp backend/.env.example backend/.env
@@ -63,20 +35,48 @@ docker compose up --build
 
 The app will be available at `http://localhost`.
 
-### Syncing with upstream
+#### Render
+
+You can deploy to [Render](https://render.com) using the included `render.yaml`:
+
+1. Fork this repo
+2. Go to **Render** → **New** → **Blueprint**
+3. Select the repository. Render creates three services: **PostgreSQL**, **backend** (Node), and **frontend** (static site)
+4. Fill in the environment variables when prompted:
+
+   | Variable | Required | Value |
+   |---|---|---|
+   | `BASE_PUBLIC_URL` | Yes | Your frontend URL, e.g. `https://calanywhere-frontend.onrender.com` |
+   | `MAILGUN_API_KEY` | No | Your Mailgun key (notification emails log to console when absent) |
+   | `MAILGUN_DOMAIN` | No | Your Mailgun domain |
+   | `MAILGUN_FROM_EMAIL` | No | e.g. `CalAnywhere <no-reply@example.com>` |
+
+5. Click **Apply**
+
+> **Note:** If Render names your backend something other than `calanywhere-backend`, update the `/api/*` rewrite URL in the frontend service's **Redirects/Rewrites** settings to match.
+
+#### Manual setup
 
 ```bash
-git fetch upstream
-git merge upstream/main
+# Backend (from /backend)
+npm install
+npm run dev       # nodemon + ts-node, watches src/
+
+# Frontend (from /frontend)
+npm install
+npm run dev       # Vite dev server on port 5173
 ```
 
-### License
+The backend runs on port 4000 and falls back to an in-memory store when PostgreSQL is unavailable, so you can develop without Docker.
 
-- **`backend/` and `frontend/`** — [AGPL-3.0](https://github.com/dajbelshaw/Scheduler/blob/main/LICENSE) (inherited from upstream)
-- **`cloud/` and all additions** — [BSL-1.1](LICENSE) (converts to AGPL-3.0 three years after each release)
+### Managed hosting
 
-See [LICENSE](LICENSE) for full terms.
+[Dynamic Skillset](https://dynamicskillset.com) runs a managed instance at [calanywhere.com](https://calanywhere.com) with additional features (dashboard, page management, encrypted notification emails). The managed platform source is at [dynamicskillset/calanywhere-cloud](https://github.com/dynamicskillset/calanywhere-cloud).
+
+### Licence
+
+[AGPL-3.0](LICENSE)
 
 ---
 
-Built by [Dynamic Skillset](https://dynamicskillset.com).
+Created by [Doug Belshaw](https://dougbelshaw.com). Cloud platform by [Dynamic Skillset](https://dynamicskillset.com).
