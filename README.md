@@ -2,25 +2,25 @@
 
 ## CalAnywhere
 
-A privacy-first scheduling tool that works with any calendar. No OAuth, no email collection, no passwords. Just share your iCal URL and let people book time with you.
+A privacy-first scheduling tool that works with any calendar. Paste your iCal URL, create a scheduling page, and share the link. Visitors see your free/busy times and can request a slot. No sign-up walls, no OAuth, no data collection.
 
 ### How it works
 
-1. **Sign up** with an Emoji ID (a memorable 3-emoji handle like 🐶🍕🚀) and your calendar's iCal URL
+1. **Paste your iCal URL** — from Google Calendar, Outlook, Fastmail, Nextcloud, or any provider that offers an iCal feed
 2. **Create a scheduling page** with your available times
-3. **Share the link** — visitors see your free/busy times and can request a slot
-4. Your iCal URL is your credential. No password to remember, no email to verify.
+3. **Share the link** — visitors see when you're free and can request a slot
+
+That's it. CalAnywhere reads your calendar's public free/busy data. It never writes to your calendar or asks for write access.
 
 ### Architecture
 
 ```
 backend/          # Express + TypeScript API
-  src/auth/       # Emoji ID authentication (email-free)
   src/routes/     # Scheduling pages API
   src/db/         # PostgreSQL with in-memory fallback
 frontend/         # React + Vite + TypeScript UI
-  src/pages/      # Signup, signin, recover, scheduling
-  src/components/ # EmojiPicker, NavBar, shared UI
+  src/pages/      # Scheduling page UI
+  src/components/ # Shared UI components
 ```
 
 ### Self-hosting
