@@ -35,26 +35,6 @@ docker compose up --build
 
 The app will be available at `http://localhost`.
 
-#### Render
-
-You can deploy to [Render](https://render.com) using the included `render.yaml`:
-
-1. Fork this repo
-2. Go to **Render** → **New** → **Blueprint**
-3. Select the repository. Render creates three services: **PostgreSQL**, **backend** (Node), and **frontend** (static site)
-4. Fill in the environment variables when prompted:
-
-   | Variable | Required | Value |
-   |---|---|---|
-   | `BASE_PUBLIC_URL` | Yes | Your frontend URL, e.g. `https://calanywhere-frontend.onrender.com` |
-   | `MAILGUN_API_KEY` | No | Your Mailgun key (notification emails log to console when absent) |
-   | `MAILGUN_DOMAIN` | No | Your Mailgun domain |
-   | `MAILGUN_FROM_EMAIL` | No | e.g. `CalAnywhere <no-reply@example.com>` |
-
-5. Click **Apply**
-
-> **Note:** If Render names your backend something other than `calanywhere-backend`, update the `/api/*` rewrite URL in the frontend service's **Redirects/Rewrites** settings to match.
-
 #### Manual setup
 
 ```bash
